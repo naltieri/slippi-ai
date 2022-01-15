@@ -58,7 +58,6 @@ def config():
 @ex.automain
 def main(dataset, expt_dir, num_epochs, epoch_time, save_interval, _config, _log, _run):
   embed_controller = embed.embed_controller_discrete  # TODO: configure
-
   controller_head_config = dict(
       _config['controller_head'],
       embed_controller=embed.get_controller_embedding_with_action_repeat(

@@ -3,7 +3,9 @@ import pandas
 import sqlite3
 import melee
 from slippi_ai import paths
-
+import os
+cwd = os.getcwd()
+paths.DB_PATH = cwd+'/data/melee_public_slp_dataset.sqlite3'
 conn = sqlite3.connect(paths.DB_PATH)
 TABLE = pandas.read_sql_query("SELECT * from replays", conn)
 char_col = 'in_game_character' if 'in_game_character_0' in TABLE.columns else 'css_character'

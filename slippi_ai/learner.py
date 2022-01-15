@@ -48,15 +48,20 @@ class Learner:
     with tf.GradientTape() as tape:
       loss, final_states, distances = self.policy.loss(
           tm_gamestate, initial_states)
-      mean_loss = tf.reduce_mean(loss)
 
+      raw_loss = tf.add_n(tf.nest.flatten(distances))
+      mean_loss = tf.reduce_mean(raw_loss)
       # maybe do this in the Policy?
       counts = tf.cast(tm_gamestate.counts[1:] + 1, tf.float32)
-      weighted_loss = tf.reduce_sum(loss) / tf.reduce_sum(counts)
+      weighted_loss = tf.reduce_sum(raw_loss) / tf.reduce_sum(counts)
+      mult_loss = tf.math.multiply(raw_loss,  tf.cast(counts[1:] + 1, tf.float32) + 1)
+      inner_product_loss = tf.reduce_sum(mult_loss) / tf.reduce_sum(counts)
+
 
     stats = dict(
         loss=mean_loss,
         weighted_loss=weighted_loss,
+        inner_product_loss=inner_product_loss,
         distances=distances,
     )
 
