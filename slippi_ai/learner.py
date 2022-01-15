@@ -54,7 +54,7 @@ class Learner:
       # maybe do this in the Policy?
       counts = tf.cast(tm_gamestate.counts[1:] + 1, tf.float32)
       weighted_loss = tf.reduce_sum(raw_loss) / tf.reduce_sum(counts)
-      mult_loss = tf.math.multiply(raw_loss,  tf.cast(counts[1:] + 1, tf.float32) + 1)
+      mult_loss = tf.math.multiply(raw_loss,  counts)
       inner_product_loss = tf.reduce_sum(mult_loss) / tf.reduce_sum(counts)
 
 
