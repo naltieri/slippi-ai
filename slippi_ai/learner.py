@@ -49,6 +49,8 @@ class Learner:
       loss, final_states, distances = self.policy.loss(
           tm_gamestate, initial_states)
 
+      action_repeat_loss = tf.reduce_mean(distances['action_repeat'])
+      del distances['action_repeat']
       raw_loss = tf.add_n(tf.nest.flatten(distances))
       mean_loss = tf.reduce_mean(raw_loss)
       # maybe do this in the Policy?
@@ -57,11 +59,11 @@ class Learner:
       mult_loss = tf.math.multiply(raw_loss,  counts)
       inner_product_loss = tf.reduce_sum(mult_loss) / tf.reduce_sum(counts)
 
-
     stats = dict(
         loss=mean_loss,
         weighted_loss=weighted_loss,
         inner_product_loss=inner_product_loss,
+        action_repeat_loss=action_repeat_loss,
         distances=distances,
     )
 

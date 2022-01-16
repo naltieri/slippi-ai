@@ -238,7 +238,7 @@ def main(dataset, expt_dir, num_epochs, epoch_time, save_interval, _config, _log
     ex.log_scalar('mps', mps, total_steps)
 
     print(f'steps={total_steps} sps={sps:.2f} mps={mps:.2f} epoch={epoch:.3f}')
-    stats_to_print = ('loss', 'weighted_loss', 'inner_product_loss')
+    stats_to_print = ('loss', 'weighted_loss', 'inner_product_loss','action_repeat_loss')
     for stat in stats_to_print:
         print(stat)
         print(f'losses: train={train_stats[stat].numpy():.4f} test={test_stats[stat].numpy():.4f}')
