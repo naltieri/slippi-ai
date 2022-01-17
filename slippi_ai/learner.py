@@ -61,7 +61,8 @@ class Learner:
       # predicted_num_repeats = tf.math.argmax(predictions['action_repeat'], -1)
       predicted_num_repeats = tf.cast(predictions['action_repeat'],tf.int64)
       action_repeat_accuracy = tf.reduce_mean(tf.cast(predicted_num_repeats==next_action['action_repeat'],tf.float32))
-      action_repeat_mean_diff = tf.reduce_mean(tf.math.abs(predicted_num_repeats - next_action['action_repeat']))
+      action_repeat_leq = tf.reduce_mean(tf.cast(predicted_num_repeats<=next_action['action_repeat'],tf.float32))
+      action_repeat_mean_diff = tf.reduce_mean(tf.cast(tf.abs(predicted_num_repeats - next_action['action_repeat']),tf.float32))
       action_repeat_diff = tf.math.abs(predicted_num_repeats - next_action['action_repeat'])
 
 
@@ -74,6 +75,7 @@ class Learner:
         action_repeat_mean_diff=action_repeat_mean_diff,
         action_repeat_diff=action_repeat_diff,
         predicted_num_repeats=predicted_num_repeats,
+        action_repeat_leq=action_repeat_leq,
         actual_num_repeats=next_action['action_repeat'],
         distances=distances,
     )
