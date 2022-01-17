@@ -238,7 +238,7 @@ def main(dataset, expt_dir, num_epochs, epoch_time, save_interval, _config, _log
     ex.log_scalar('sps', sps, total_steps)
     ex.log_scalar('mps', mps, total_steps)
 
-    pd.Series({'pred':np.reshape(train_stats['predicted_num_repeats'], [-1]),'true':np.reshape(train_stats['actual_num_repeats'], [-1])}).to_csv('pred_v_actual_repeats.csv')
+    pd.DataFrame({'pred':np.reshape(train_stats['predicted_num_repeats'], [-1]),'true':np.reshape(train_stats['actual_num_repeats'], [-1])}).to_csv('pred_v_actual_repeats.csv')
 
 
     print(f'steps={total_steps} sps={sps:.2f} mps={mps:.2f} epoch={epoch:.3f}')
