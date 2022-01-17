@@ -2,7 +2,7 @@ from typing import List, Optional
 import sonnet as snt
 import tensorflow as tf
 from slippi_ai.data import Batch
-
+import pandas as pd
 from slippi_ai.policies import Policy
 
 def to_time_major(t):
@@ -46,7 +46,7 @@ class Learner:
     tm_gamestate = tf.nest.map_structure(to_time_major, bm_gamestate)
 
     with tf.GradientTape() as tape:
-      loss, final_states, distances = self.policy.loss(
+      loss, final_states, distances, predictions, next_action = self.policy.loss(
           tm_gamestate, initial_states)
 
       action_repeat_loss = tf.reduce_mean(distances['action_repeat'])
@@ -58,12 +58,26 @@ class Learner:
       weighted_loss = tf.reduce_sum(raw_loss) / tf.reduce_sum(counts)
       mult_loss = tf.math.multiply(raw_loss,  counts)
       inner_product_loss = tf.reduce_sum(mult_loss) / tf.reduce_sum(counts)
+      predicted_num_repeats = tf.math.argmax(self.policy.controller_head.embed_controller.split(predictions)['action_repeat'], -1)
+      action_repeat_accuracy = tf.reduce_mean(tf.cast(predicted_num_repeats==next_action['action_repeat'],tf.float32))
+      action_repeat_mean_diff = tf.reduce_mean(tf.math.abs(predicted_num_repeats - next_action['action_repeat']))
+      action_repeat_diff = tf.math.abs(predicted_num_repeats - next_action['action_repeat'])
+
+
+
+
+
 
     stats = dict(
         loss=mean_loss,
         weighted_loss=weighted_loss,
         inner_product_loss=inner_product_loss,
         action_repeat_loss=action_repeat_loss,
+        action_repeat_accuracy=action_repeat_accuracy,
+        action_repeat_mean_diff=action_repeat_mean_diff,
+        action_repeat_diff=action_repeat_diff,
+        predicted_num_repeats=predicted_num_repeats,
+        actual_num_repeats=next_action['action_repeat'],
         distances=distances,
     )
 

@@ -11,6 +11,7 @@ import sacred
 import numpy as np
 import sonnet as snt
 import tensorflow as tf
+import pandas as pd
 
 from slippi_ai import (
     controller_heads,
@@ -237,8 +238,11 @@ def main(dataset, expt_dir, num_epochs, epoch_time, save_interval, _config, _log
     ex.log_scalar('sps', sps, total_steps)
     ex.log_scalar('mps', mps, total_steps)
 
+
+    pd.Series({'pred':np.reshape(train_stats['predicted_num_repeats'], [-1]),'true':np.reshape(train_stats['actual_num_repeats'], [-1])}).to_csv('pred_v_actual_repeats.csv')
+
     print(f'steps={total_steps} sps={sps:.2f} mps={mps:.2f} epoch={epoch:.3f}')
-    stats_to_print = ('loss', 'weighted_loss', 'inner_product_loss','action_repeat_loss')
+    stats_to_print = ('loss', 'weighted_loss', 'inner_product_loss', 'action_repeat_loss', 'action_repeat_accuracy', 'action_repeat_mean_diff', 'action_repeat_diff')
     for stat in stats_to_print:
         print(stat)
         print(f'losses: train={train_stats[stat].numpy():.4f} test={test_stats[stat].numpy():.4f}')
