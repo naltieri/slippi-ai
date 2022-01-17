@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f68f4572-d7c7-4748-bebf-c47aca51c213" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pred_v_actual_repeats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pred_v_actual_repeats.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slippi_ai/controller_heads.py" beforeDir="false" afterPath="$PROJECT_DIR$/slippi_ai/controller_heads.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slippi_ai/learner.py" beforeDir="false" afterPath="$PROJECT_DIR$/slippi_ai/learner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/slippi_ai/policies.py" beforeDir="false" afterPath="$PROJECT_DIR$/slippi_ai/policies.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
