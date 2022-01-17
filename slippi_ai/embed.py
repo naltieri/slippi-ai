@@ -419,7 +419,7 @@ def get_controller_embedding(discrete_axis_spacing=0):
   ])
 
 embed_controller_default = get_controller_embedding()  # continuous sticks
-embed_controller_discrete = get_controller_embedding(16)
+embed_controller_discrete = get_controller_embedding(32)
 
 def get_controller_embedding_with_action_repeat(embed_controller, max_repeat):
   return StructEmbedding("controller_with_action_repeat", [
