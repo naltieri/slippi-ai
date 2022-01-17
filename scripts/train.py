@@ -240,7 +240,6 @@ def main(dataset, expt_dir, num_epochs, epoch_time, save_interval, _config, _log
 
     pd.DataFrame({'pred':np.reshape(test_stats['predicted_num_repeats'], [-1]),'true':np.reshape(test_stats['actual_num_repeats'], [-1])}).to_csv('pred_v_actual_repeats.csv')
 
-    breakpoint()
     print(f'steps={total_steps} sps={sps:.2f} mps={mps:.2f} epoch={epoch:.3f}')
     stats_to_print = ('loss', 'weighted_loss', 'inner_product_loss', 'action_repeat_loss', 'action_repeat_accuracy', 'action_repeat_mean_diff','action_repeat_leq')
     for stat in stats_to_print:
