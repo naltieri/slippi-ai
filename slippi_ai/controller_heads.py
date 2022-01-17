@@ -69,12 +69,15 @@ class AutoRegressiveComponent(snt.Module):
     residual += self.decoder(sample_embedding)
     return residual, sample
 
-  def distance(self, residual, prev_raw, target_raw):
+  def get_controller_prediction(self,residual, prev_raw):
     # directly connect from the same component at time t-1
     prev_embedding = self.embedder(prev_raw)
     input_ = tf.concat([residual, prev_embedding], -1)
     # project down to the size desired by the component
-    input_ = self.encoder(input_)
+    return self.encoder(input_)
+
+  def distance(self, residual, prev_raw, target_raw):
+    input_ = self.get_controller_prediction(residual,prev_raw)
     # compute the distance between prediction and target
     distance = self.embedder.distance(input_, target_raw)
     # auto-regress using the target (aka teacher forcing)
@@ -115,6 +118,7 @@ class AutoRegressive(ControllerHead):
     residual = self.to_residual(inputs)
     prev_controller_flat = self.embed_controller.flatten(prev_controller_state)
     target_controller_flat = self.embed_controller.flatten(target_controller_state)
+
 
     distances = []
     for res_block, prev, target in zip(

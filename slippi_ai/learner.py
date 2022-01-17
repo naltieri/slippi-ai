@@ -58,14 +58,11 @@ class Learner:
       weighted_loss = tf.reduce_sum(raw_loss) / tf.reduce_sum(counts)
       mult_loss = tf.math.multiply(raw_loss,  counts)
       inner_product_loss = tf.reduce_sum(mult_loss) / tf.reduce_sum(counts)
-      predicted_num_repeats = tf.math.argmax(self.policy.controller_head.embed_controller.split(predictions)['action_repeat'], -1)
+      # predicted_num_repeats = tf.math.argmax(predictions['action_repeat'], -1)
+      predicted_num_repeats = tf.cast(predictions['action_repeat'],tf.int64)
       action_repeat_accuracy = tf.reduce_mean(tf.cast(predicted_num_repeats==next_action['action_repeat'],tf.float32))
       action_repeat_mean_diff = tf.reduce_mean(tf.math.abs(predicted_num_repeats - next_action['action_repeat']))
       action_repeat_diff = tf.math.abs(predicted_num_repeats - next_action['action_repeat'])
-
-
-
-
 
 
     stats = dict(

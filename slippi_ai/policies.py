@@ -47,7 +47,7 @@ class Policy(snt.Module):
 
     distances = self.controller_head.distance(
         outputs[:-1], prev_action, next_action)
-    predictions = self.controller_head.controller_prediction(outputs[:-1], prev_action)
+    predictions = self.controller_head.sample(outputs[:-1], prev_action)
     loss = tf.add_n(tf.nest.flatten(distances))
     loss = tf.divide(loss,  tf.cast(action_repeat[1:] + 1, tf.float32) + 1)
     return loss, final_state, distances, predictions, next_action
