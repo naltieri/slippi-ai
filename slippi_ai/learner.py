@@ -48,8 +48,8 @@ class Learner:
     with tf.GradientTape() as tape:
       loss, final_states, distances, predictions, next_action = self.policy.loss(
           tm_gamestate, initial_states)
-
-      action_repeat_loss = tf.reduce_mean(distances['action_repeat'])
+      breakpoint()
+      # action_repeat_loss = tf.reduce_mean(distances['action_repeat'])
       del distances['action_repeat']
       raw_loss = tf.add_n(tf.nest.flatten(distances))
       mean_loss = tf.reduce_mean(raw_loss)
