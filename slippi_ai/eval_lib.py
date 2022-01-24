@@ -114,8 +114,8 @@ class Human(Player):
 
 @dataclass
 class CPU(Player):
-  character: melee.Character = melee.Character.FOX
-  level: int = 9
+  character: melee.Character = melee.Character.FALCO
+  level: int = 1
 
   def controller_type(self) -> melee.ControllerType:
     return melee.ControllerType.STANDARD
@@ -144,7 +144,7 @@ class Dolphin:
       dolphin_path: str,
       iso_path: str,
       players: Mapping[int, Player],
-      stage: melee.Stage = melee.Stage.YOSHIS_STORY,
+      stage: melee.Stage = melee.Stage.FINAL_DESTINATION,
       online_delay=0,
       blocking_input=True,
   ) -> None:
